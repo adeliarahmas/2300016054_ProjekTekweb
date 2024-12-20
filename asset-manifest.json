@@ -1,0 +1,15 @@
+{
+  "files": {
+    "main.css": "/2300016054_ProjekTekweb/static/css/main.3a9e879f.css",
+    "main.js": "/2300016054_ProjekTekweb/static/js/main.e809411b.js",
+    "static/js/488.add332fd.chunk.js": "/2300016054_ProjekTekweb/static/js/488.add332fd.chunk.js",
+    "index.html": "/2300016054_ProjekTekweb/index.html",
+    "main.3a9e879f.css.map": "/2300016054_ProjekTekweb/static/css/main.3a9e879f.css.map",
+    "main.e809411b.js.map": "/2300016054_ProjekTekweb/static/js/main.e809411b.js.map",
+    "488.add332fd.chunk.js.map": "/2300016054_ProjekTekweb/static/js/488.add332fd.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.3a9e879f.css",
+    "static/js/main.e809411b.js"
+  ]
+}
