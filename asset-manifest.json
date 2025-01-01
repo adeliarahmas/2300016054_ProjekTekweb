@@ -1,15 +1,17 @@
 {
   "files": {
-    "main.css": "/2300016054_ProjekTekweb/static/css/main.3a9e879f.css",
-    "main.js": "/2300016054_ProjekTekweb/static/js/main.e809411b.js",
+    "main.css": "/2300016054_ProjekTekweb/static/css/main.c4240507.css",
+    "main.js": "/2300016054_ProjekTekweb/static/js/main.5127bc06.js",
     "static/js/488.add332fd.chunk.js": "/2300016054_ProjekTekweb/static/js/488.add332fd.chunk.js",
+    "static/media/palm.png": "/2300016054_ProjekTekweb/static/media/palm.713c682c89d818e13df3.png",
+    "static/media/cawit.png": "/2300016054_ProjekTekweb/static/media/cawit.6747ae22f9b851db7413.png",
     "index.html": "/2300016054_ProjekTekweb/index.html",
-    "main.3a9e879f.css.map": "/2300016054_ProjekTekweb/static/css/main.3a9e879f.css.map",
-    "main.e809411b.js.map": "/2300016054_ProjekTekweb/static/js/main.e809411b.js.map",
+    "main.c4240507.css.map": "/2300016054_ProjekTekweb/static/css/main.c4240507.css.map",
+    "main.5127bc06.js.map": "/2300016054_ProjekTekweb/static/js/main.5127bc06.js.map",
     "488.add332fd.chunk.js.map": "/2300016054_ProjekTekweb/static/js/488.add332fd.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.3a9e879f.css",
-    "static/js/main.e809411b.js"
+    "static/css/main.c4240507.css",
+    "static/js/main.5127bc06.js"
   ]
 }
