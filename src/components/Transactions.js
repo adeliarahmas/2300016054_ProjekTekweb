@@ -1,152 +1,203 @@
 import React, { useState } from 'react';
 
-function Transactions() {
-  const [transactions, setTransactions] = useState([
-    { id: 1, date: '2024-12-01', location: 'Ladang klp 5', partner: 'ptpn 5', quantity: 10, amount: 5000000 },
-    { id: 2, date: '2024-12-10', location: 'Ladang klp 6', partner: 'pt dwg', quantity: 20, amount: 20000000 },
-  ]);
-
-  const [newTransaction, setNewTransaction] = useState({
-    date: '',
-    location: '',
-    partner: '',
-    quantity: '',
-    amount: '',
+const Transactions = () => {
+  const [transaksi, setTransaksi] = useState([]);
+  const [dataTransaksi, setDataTransaksi] = useState({
+    nomor: '',
+    tanggal: '',
+    lokasi: '',
+    mitra: '',
+    jumlah: '',
+    pendapatan: '',
   });
+  const [sedangEdit, setSedangEdit] = useState(false);
+  const [idEdit, setIdEdit] = useState(null);
 
-  const handleAdd = () => {
-    const nextId = transactions.length ? transactions[transactions.length - 1].id + 1 : 1;
-    setTransactions([...transactions, { id: nextId, ...newTransaction, quantity: Number(newTransaction.quantity), amount: Number(newTransaction.amount) }]);
-    setNewTransaction({ date: '', location: '', partner: '', quantity: '', amount: '' });
+  // Tambah transaksi baru
+  const handleTambah = () => {
+    if (
+      dataTransaksi.nomor &&
+      dataTransaksi.tanggal &&
+      dataTransaksi.lokasi &&
+      dataTransaksi.mitra &&
+      dataTransaksi.jumlah &&
+      dataTransaksi.pendapatan
+    ) {
+      setTransaksi([ 
+        ...transaksi,
+        {
+          id: Date.now(),
+          nomor: dataTransaksi.nomor,
+          tanggal: dataTransaksi.tanggal,
+          lokasi: dataTransaksi.lokasi,
+          mitra: dataTransaksi.mitra,
+          jumlah: dataTransaksi.jumlah,
+          pendapatan: dataTransaksi.pendapatan,
+        },
+      ]);
+      setDataTransaksi({ nomor: '', tanggal: '', lokasi: '', mitra: '', jumlah: '', pendapatan: '' });
+    }
   };
 
-  const handleDelete = (id) => {
-    setTransactions(transactions.filter((transaction) => transaction.id !== id));
+  // Hapus transaksi
+  const handleHapus = (id) => {
+    setTransaksi(transaksi.filter((trx) => trx.id !== id));
   };
 
-  const handleEdit = (id, key, value) => {
-    setTransactions(
-      transactions.map((transaction) =>
-        transaction.id === id ? { ...transaction, [key]: value } : transaction
-      )
-    );
+  // Edit transaksi
+  const handleEdit = (id) => {
+    const trx = transaksi.find((trx) => trx.id === id);
+    setDataTransaksi({
+      nomor: trx.nomor,
+      tanggal: trx.tanggal,
+      lokasi: trx.lokasi,
+      mitra: trx.mitra,
+      jumlah: trx.jumlah,
+      pendapatan: trx.pendapatan,
+    });
+    setSedangEdit(true);
+    setIdEdit(id);
   };
+
+  // Update transaksi
+  const handleUpdate = () => {
+    if (
+      dataTransaksi.nomor &&
+      dataTransaksi.tanggal &&
+      dataTransaksi.lokasi &&
+      dataTransaksi.mitra &&
+      dataTransaksi.jumlah &&
+      dataTransaksi.pendapatan
+    ) {
+      setTransaksi(
+        transaksi.map((trx) =>
+          trx.id === idEdit
+            ? {
+                ...trx,
+                nomor: dataTransaksi.nomor,
+                tanggal: dataTransaksi.tanggal,
+                lokasi: dataTransaksi.lokasi,
+                mitra: dataTransaksi.mitra,
+                jumlah: dataTransaksi.jumlah,
+                pendapatan: dataTransaksi.pendapatan,
+              }
+            : trx
+        )
+      );
+      setSedangEdit(false);
+      setIdEdit(null);
+      setDataTransaksi({ nomor: '', tanggal: '', lokasi: '', mitra: '', jumlah: '', pendapatan: '' });
+    }
+  };
+
+  // Menghitung total pendapatan
+  const totalPendapatan = transaksi.reduce((total, trx) => total + parseFloat(trx.pendapatan), 0);
 
   return (
-    <div>
-      <h2 className="text-2xl font-bold mb-4">Transaksi</h2>
-      <table className="table-auto w-full bg-white shadow-md rounded-lg">
-        <thead>
-          <tr>
-            <th className="px-4 py-2">Tanggal</th>
-            <th className="px-4 py-2">Lokasi</th>
-            <th className="px-4 py-2">Mitra</th>
-            <th className="px-4 py-2">Kuantitas(kg)</th>
-            <th className="px-4 py-2">Jumlah</th>
-            <th className="px-4 py-2">Hapus</th>
-          </tr>
-        </thead>
-        <tbody>
-          {transactions.map((transaction) => (
-            <tr key={transaction.id} className="border-t">
-              <td className="px-4 py-2 text-center">
-                <input
-                  type="date"
-                  value={transaction.date}
-                  onChange={(e) => handleEdit(transaction.id, 'date', e.target.value)}
-                  className="border rounded-md p-1 w-full"
-                />
-              </td>
-              <td className="px-4 py-2">
-                <input
-                  type="text"
-                  value={transaction.location}
-                  onChange={(e) => handleEdit(transaction.id, 'location', e.target.value)}
-                  className="border rounded-md p-1 w-full"
-                />
-              </td>
-              <td className="px-4 py-2">
-                <input
-                  type="text"
-                  value={transaction.partner}
-                  onChange={(e) => handleEdit(transaction.id, 'partner', e.target.value)}
-                  className="border rounded-md p-1 w-full"
-                />
-              </td>
-              <td className="px-4 py-2 text-center">
-                <input
-                  type="number"
-                  value={transaction.quantity}
-                  onChange={(e) => handleEdit(transaction.id, 'quantity', Number(e.target.value))}
-                  className="border rounded-md p-1 w-full"
-                />
-              </td>
-              <td className="px-4 py-2">
-                <input
-                  type="number"
-                  value={transaction.amount}
-                  onChange={(e) => handleEdit(transaction.id, 'amount', Number(e.target.value))}
-                  className="border rounded-md p-1 w-full"
-                />
-              </td>
-              <td className="px-4 py-2 text-center">
-                <button
-                  onClick={() => handleDelete(transaction.id)}
-                  className="text-red-500 hover:text-red-700"
-                >
-                  Hapus
-                </button>
-              </td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
-      <div className="mt-4">
-        <h3 className="text-xl font-bold mb-2">Tambah Transaksi</h3>
-        <input
-          type="date"
-          placeholder="Tanggal"
-          value={newTransaction.date}
-          onChange={(e) => setNewTransaction({ ...newTransaction, date: e.target.value })}
-          className="border p-2 mr-2 rounded-md"
-        />
-        <input
-          type="text"
-          placeholder="Lokasi"
-          value={newTransaction.location}
-          onChange={(e) => setNewTransaction({ ...newTransaction, location: e.target.value })}
-          className="border p-2 mr-2 rounded-md"
-        />
-        <input
-          type="text"
-          placeholder="Mitra"
-          value={newTransaction.partner}
-          onChange={(e) => setNewTransaction({ ...newTransaction, partner: e.target.value })}
-          className="border p-2 mr-2 rounded-md"
-        />
-        <input
-          type="number"
-          placeholder="Kuantitas"
-          value={newTransaction.quantity}
-          onChange={(e) => setNewTransaction({ ...newTransaction, quantity: e.target.value })}
-          className="border p-2 mr-2 rounded-md"
-        />
-        <input
-          type="number"
-          placeholder="Jumlah"
-          value={newTransaction.amount}
-          onChange={(e) => setNewTransaction({ ...newTransaction, amount: e.target.value })}
-          className="border p-2 mr-2 rounded-md"
-        />
+    <div className="container mx-auto p-6 bg-white rounded-lg shadow-lg">
+      <div className="mb-8">
+        <h2 className="text-3xl font-bold text-center text-black mb-6">Kelola Transaksi</h2>
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mb-6">
+          <input
+            type="text"
+            placeholder="Nomor"
+            value={dataTransaksi.nomor}
+            onChange={(e) => setDataTransaksi({ ...dataTransaksi, nomor: e.target.value })}
+            className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-gray-700"
+          />
+          <input
+            type="date"
+            value={dataTransaksi.tanggal}
+            onChange={(e) => setDataTransaksi({ ...dataTransaksi, tanggal: e.target.value })}
+            className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-gray-700"
+          />
+          <input
+            type="text"
+            placeholder="Lokasi"
+            value={dataTransaksi.lokasi}
+            onChange={(e) => setDataTransaksi({ ...dataTransaksi, lokasi: e.target.value })}
+            className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-gray-700"
+          />
+          <input
+            type="text"
+            placeholder="Mitra"
+            value={dataTransaksi.mitra}
+            onChange={(e) => setDataTransaksi({ ...dataTransaksi, mitra: e.target.value })}
+            className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-gray-700"
+          />
+          <input
+            type="number"
+            placeholder="Jumlah"
+            value={dataTransaksi.jumlah}
+            onChange={(e) => setDataTransaksi({ ...dataTransaksi, jumlah: e.target.value })}
+            className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-gray-700"
+          />
+          <input
+            type="number"
+            placeholder="Pendapatan"
+            value={dataTransaksi.pendapatan}
+            onChange={(e) => setDataTransaksi({ ...dataTransaksi, pendapatan: e.target.value })}
+            className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-gray-700"
+          />
+        </div>
         <button
-          onClick={handleAdd}
-          className="bg-green-600 text-white px-4 py-2 rounded-md hover:bg-green-700"
+          onClick={sedangEdit ? handleUpdate : handleTambah}
+          className={`w-full sm:w-auto lg:w-1/4 p-3 text-white rounded-lg ${
+            sedangEdit ? 'bg-amber-900 hover:bg-amber-700' : 'bg-green-600 hover:bg-green-500'
+          } focus:outline-none focus:ring-2 focus:ring-gray-500`}
         >
-          Tambah
+          {sedangEdit ? 'Perbarui' : 'Tambah'}
         </button>
+      </div>
+
+      <div className="overflow-x-auto">
+        <table className="min-w-full bg-white rounded-lg shadow-lg">
+          <thead>
+            <tr className="bg-green-600 text-white">
+              <th className="px-6 py-3 text-center">No</th>
+              <th className="px-6 py-3 text-center">Tanggal</th>
+              <th className="px-6 py-3 text-center">Lokasi</th>
+              <th className="px-6 py-3 text-center">Mitra</th>
+              <th className="px-6 py-3 text-center">Kuantitas (kg)</th>
+              <th className="px-6 py-3 text-center">Pendapatan (Rp)</th>
+              <th className="px-6 py-3 text-center">Aksi</th>
+            </tr>
+          </thead>
+          <tbody>
+            {transaksi.map((trx, index) => (
+              <tr key={trx.id} className="border-t hover:bg-gray-100">
+                <td className="px-6 py-3 text-center">{index + 1}</td>
+                <td className="px-6 py-3 text-center">{trx.tanggal}</td>
+                <td className="px-6 py-3 text-center">{trx.lokasi}</td>
+                <td className="px-6 py-3 text-center">{trx.mitra}</td>
+                <td className="px-6 py-3 text-center">{trx.jumlah}</td>
+                <td className="px-6 py-3 text-center">{trx.pendapatan.toLocaleString()}</td>
+                <td className="px-6 py-3 text-center">
+                  <button
+                    onClick={() => handleEdit(trx.id)}
+                    className="bg-amber-700 text-white px-3 py-1 rounded-lg mr-2 hover:bg-yellow-700"
+                  >
+                    Edit
+                  </button>
+                  <button
+                    onClick={() => handleHapus(trx.id)}
+                    className="bg-red-600 text-white px-3 py-1 rounded-lg hover:bg-red-400"
+                  >
+                    Hapus
+                  </button>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+
+      {/* Menampilkan total pendapatan */}
+      <div className="mt-4 text-right font-bold text-lg">
+        <span>Total Pendapatan: Rp {totalPendapatan.toLocaleString()}</span>
       </div>
     </div>
   );
-}
+};
 
 export default Transactions;

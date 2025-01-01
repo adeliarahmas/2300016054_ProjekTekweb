@@ -1,12 +1,25 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import { FaBars } from 'react-icons/fa';
 
-function Navbar() {
+function Navbar({ setIsSidebarOpen }) {
+  const [currentDate, setCurrentDate] = useState('');
+
+  useEffect(() => {
+    const date = new Date();
+    const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+    setCurrentDate(date.toLocaleDateString('en-US', options));
+  }, []);
+
   return (
-    <div className="bg-white shadow-md p-4 flex justify-between items-center">
-      <h1 className="text-xl font-bold">Welcome To Palmify</h1>
-      <div className="flex items-center space-x-4">
-        <div className="flex items-center space-x-2">
-        </div>
+    <div className="flex justify-between items-center w-full">
+      <button
+        onClick={() => setIsSidebarOpen(prev => !prev)}
+        className="block md:hidden p-2 text-gray-700 hover:bg-gray-300 rounded-lg"
+      >
+        <FaBars size={24} />
+      </button>
+      <div className="text-center sm:text-left lg:text-right text-gray-500 text-sm font-medium flex-grow">
+        {currentDate}
       </div>
     </div>
   );
