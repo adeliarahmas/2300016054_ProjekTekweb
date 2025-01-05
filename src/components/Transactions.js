@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
 const Transactions = () => {
   const [transaksi, setTransaksi] = useState([]);
@@ -13,6 +13,19 @@ const Transactions = () => {
   const [sedangEdit, setSedangEdit] = useState(false);
   const [idEdit, setIdEdit] = useState(null);
 
+  // Load data dari localStorage saat komponen dimuat
+  useEffect(() => {
+    const data = localStorage.getItem('transaksi');
+    if (data) {
+      setTransaksi(JSON.parse(data));
+    }
+  }, []);
+
+  // Simpan data ke localStorage
+  const simpanKeLocalStorage = (data) => {
+    localStorage.setItem('transaksi', JSON.stringify(data));
+  };
+
   // Tambah transaksi baru
   const handleTambah = () => {
     if (
@@ -23,7 +36,7 @@ const Transactions = () => {
       dataTransaksi.jumlah &&
       dataTransaksi.pendapatan
     ) {
-      setTransaksi([ 
+      const transaksiBaru = [
         ...transaksi,
         {
           id: Date.now(),
@@ -34,14 +47,18 @@ const Transactions = () => {
           jumlah: dataTransaksi.jumlah,
           pendapatan: dataTransaksi.pendapatan,
         },
-      ]);
+      ];
+      setTransaksi(transaksiBaru);
+      simpanKeLocalStorage(transaksiBaru);
       setDataTransaksi({ nomor: '', tanggal: '', lokasi: '', mitra: '', jumlah: '', pendapatan: '' });
     }
   };
 
   // Hapus transaksi
   const handleHapus = (id) => {
-    setTransaksi(transaksi.filter((trx) => trx.id !== id));
+    const transaksiBaru = transaksi.filter((trx) => trx.id !== id);
+    setTransaksi(transaksiBaru);
+    simpanKeLocalStorage(transaksiBaru);
   };
 
   // Edit transaksi
@@ -69,21 +86,21 @@ const Transactions = () => {
       dataTransaksi.jumlah &&
       dataTransaksi.pendapatan
     ) {
-      setTransaksi(
-        transaksi.map((trx) =>
-          trx.id === idEdit
-            ? {
-                ...trx,
-                nomor: dataTransaksi.nomor,
-                tanggal: dataTransaksi.tanggal,
-                lokasi: dataTransaksi.lokasi,
-                mitra: dataTransaksi.mitra,
-                jumlah: dataTransaksi.jumlah,
-                pendapatan: dataTransaksi.pendapatan,
-              }
-            : trx
-        )
+      const transaksiBaru = transaksi.map((trx) =>
+        trx.id === idEdit
+          ? {
+              ...trx,
+              nomor: dataTransaksi.nomor,
+              tanggal: dataTransaksi.tanggal,
+              lokasi: dataTransaksi.lokasi,
+              mitra: dataTransaksi.mitra,
+              jumlah: dataTransaksi.jumlah,
+              pendapatan: dataTransaksi.pendapatan,
+            }
+          : trx
       );
+      setTransaksi(transaksiBaru);
+      simpanKeLocalStorage(transaksiBaru);
       setSedangEdit(false);
       setIdEdit(null);
       setDataTransaksi({ nomor: '', tanggal: '', lokasi: '', mitra: '', jumlah: '', pendapatan: '' });
