@@ -11,7 +11,7 @@ const Dashboard = () => {
     datasets: [
       {
         label: 'Harga Sawit (Rp)',
-        data: [2500, 2700, 2600, 2650, 2800, 2750, 2900],
+        data: [3500, 3700, 3600, 3650, 3800, 3750, 3900],
         borderColor: 'rgb(34, 197, 94)',
         backgroundColor: 'rgba(34, 197, 94, 0.2)',
         fill: true,
@@ -22,11 +22,11 @@ const Dashboard = () => {
 
   // Data Pendapatan 6 Bulan Terakhir
   const revenueChartData = {
-    labels: ['Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni'],
+    labels: ['Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember'],
     datasets: [
       {
         label: 'Pendapatan (Juta Rp)',
-        data: [500, 600, 550, 580, 620, 700],
+        data: [10, 20, 20, 15, 20, 25],
         borderColor: 'rgb(59, 130, 246)',
         backgroundColor: 'rgba(59, 130, 246, 0.2)',
         fill: true,
@@ -39,23 +39,23 @@ const Dashboard = () => {
     <div className="flex flex-col h-screen bg-gray-100">
       {/* Judul Dashboard */}
       <div className="text-center py-8 bg-gradient-to-r from-green-400 to-blue-500 text-white shadow-lg">
-        <h1 className="text-4xl font-extrabold">Berita Terkini Perkebunan Sawit</h1>
-        <p className="text-lg mt-2">Informasi terbaru seputar harga dan pendapatan sawit di Indonesia</p>
+        <h1 className="text-4xl font-extrabold">Perkebunan Sawit</h1>
+        <p className="text-lg mt-2">Informasi seputar harga dan pendapatan sawit</p>
       </div>
 
       {/* Statistik Tambahan dalam Grid */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 p-8">
         <div className="bg-white p-6 rounded-lg shadow-lg flex justify-between items-center">
           <p className="text-gray-700 font-medium">Luas Perkebunan Kelapa Sawit:</p>
-          <p className="text-gray-900 font-bold">11,4 Juta Hektar</p>
+          <p className="text-gray-900 font-bold">11 Hektar</p>
         </div>
         <div className="bg-white p-6 rounded-lg shadow-lg flex justify-between items-center">
           <p className="text-gray-700 font-medium">Total Produksi Minyak Sawit:</p>
-          <p className="text-gray-900 font-bold">45 Juta Ton</p>
+          <p className="text-gray-900 font-bold">45 ribu Ton</p>
         </div>
         <div className="bg-white p-6 rounded-lg shadow-lg flex justify-between items-center">
-          <p className="text-gray-700 font-medium">Kontribusi ke Ekspor Nasional:</p>
-          <p className="text-gray-900 font-bold">14%</p>
+          <p className="text-gray-700 font-medium">Pendapatan perbulan:</p>
+          <p className="text-gray-900 font-bold">Rp 10.000.000</p>
         </div>
       </div>
 
