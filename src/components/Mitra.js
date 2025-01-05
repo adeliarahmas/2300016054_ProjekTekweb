@@ -4,6 +4,13 @@ const Mitra = () => {
   // Data statis mitra, harga sawit, dan penjelasan singkat
   const mitraData = [
     {
+      namaPerusahaan: 'PTPN V Tanah Putih',
+      alamat: 'Jl. Tanah putih, Bagan SInembah',
+      kontak: '(0761) 967-8930',
+      hargaSawit: 3780,
+      deskripsi: 'PTPN V Tanah Putih, solusi terbaik untuk produk kelapa sawit berkualitas tinggi dengan komitmen pada keberlanjutan dan inovasi.',
+    },
+    {
       namaPerusahaan: 'PT Agro Makmur Sejahtera',
       alamat: 'Jl. Kebun Sawit No. 45, Medan',
       kontak: '(061) 123-4567',
